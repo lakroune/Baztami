@@ -1,0 +1,130 @@
+
+let card = document.createElement('div');
+card.className = 'card text-white bg-success m-2 bg-opacity-25';
+card.innerHTML = ' <div class="row card-body   fw-bold ">   <div class="col"> discription</div> <div class="col">Revenu </div><div class="col "> 12-1-2121</div><div class="col green-500"> +2778</div><div class="col-md-1"> <i class="bi bi-pencil-square"></i></div><div class="col-md-1"> <i class="bi bi-trash3-fill"></i></div></div>'
+let card_operations = document.getElementById('card_operations')
+// card_operations.appendChild(card)
+
+
+function get_Montant() {
+    return document.getElementById('montant').value;
+}
+// get Discription de operation 
+function get_Discription() {
+    return document.getElementById('discription').value;
+}
+// get type de operation Dépense ou Revenu
+function get_Type() {
+    return document.getElementById('type').value;
+}
+
+// verifier le champ de input Mantant
+function verifier_Montant() {
+    if (get_Montant() > 0)
+        return 1
+    return 0
+}
+// verifier le champ de input Discription
+
+function verifier_Discription() {
+    if (get_Discription().length > 0)
+        return 1
+    return 0
+}
+
+//  cree un objet 
+function creer_objet(mantant, description, type) {
+    let objet = {
+        id: 1,
+        mantant: mantant,
+        description: description,
+        type: type,
+        date: new Date()
+    }
+    return objet
+}
+
+// charger les donne atraver  localStorage
+function charger_les_donnees(my_key) {
+    let array_to_string = localStorage.getItem(my_key) || '[]'
+    let myarray = JSON.parse(array_to_string)
+    return myarray
+}
+
+// sauvegarder les donnees sur local Storage
+function enregistrer_les_donnees(my_key, objet) {
+    let myarray = charger_les_donnees(my_key)
+    myarray.push(objet);
+    let array_to_string = JSON.stringify(myarray)
+    localStorage.setItem(my_key, array_to_string)
+}
+
+//  enregistrer la transaction  sur local Storage
+function enregistrer_transaction(my_key) {
+    if (verifier_Montant() && verifier_Discription()) {
+        let objet = creer_objet(get_Montant(), get_Discription(), get_Type())
+        enregistrer_les_donnees(my_key, objet)
+        update(my_key)
+    }
+}
+
+function calculer_montant_Dépense(my_key) {
+    let myarray = charger_les_donnees(my_key)
+    let somme_Dépense = 0
+    for (let index = 0; index < myarray.length; index++)
+        if (myarray[index].type == "Dépense")
+            somme_Dépense += parseInt(myarray[index].mantant)
+    return somme_Dépense
+}
+
+function calculer_montant_Revenu(my_key) {
+    let myarray = charger_les_donnees(my_key)
+    let somme_Revenu = 0
+    for (let index = 0; index < myarray.length; index++)
+        if (myarray[index].type == "Revenu")
+            somme_Revenu += parseInt(myarray[index].mantant)
+    return somme_Revenu
+}
+function calculer_montant_Actual(my_key) {
+    return calculer_montant_Revenu(my_key) - calculer_montant_Dépense(my_key)
+}
+
+function set_MontantActual(my_key) {
+    document.getElementById('MontantActual').textContent = calculer_montant_Actual(my_key)
+}
+
+function set_MontantRevenu(my_key) {
+    document.getElementById('MontantEntrer').textContent = calculer_montant_Revenu(my_key)
+}
+
+function set_MontantDépense(my_key) {
+    document.getElementById('MontantSortie').textContent = calculer_montant_Dépense(my_key)
+}
+
+
+function update(my_key) {
+    set_MontantActual(my_key)
+    set_MontantRevenu(my_key)
+    set_MontantDépense(my_key)
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
