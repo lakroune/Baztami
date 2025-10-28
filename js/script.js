@@ -275,8 +275,8 @@ function methodefultter(type_fultter) {
 
     }
     if (type_fultter == "Tous") set_cards_in_html(my_key)
-
-    console.log("kjdhsl")
+    else if (!localStorage.getItem("filtrer"))
+        set_cards_in_html(my_key)
     update_montants(my_key)
 }
 
@@ -313,7 +313,7 @@ function supprimer() {
     let array_to_string = JSON.stringify(newarray)
     localStorage.setItem(my_key, array_to_string)
     validation_supprission.classList.add("d-none")
-    set_cards_in_html(my_key);
+    methodefultter(localStorage.getItem("filtrer"))
     localStorage.removeItem('id_supprimer')
 }
 
