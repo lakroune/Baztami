@@ -7,8 +7,8 @@ let btnanullerTransaction = document.getElementById("btnanullerTransaction")
 let ligthmode = document.getElementById("ligthmode")
 let darkmode = document.getElementById("darkmode")
 let mybody = document.getElementById("mybody")
-let btntocard=document.getElementById("tocard")
-let btntolist= document.getElementById("tolist")
+let btntocard = document.getElementById("tocard")
+let btntolist = document.getElementById("tolist")
 let card_operations = document.getElementById('cards')
 // dark mode
 ///////////////////////////////////////////////
@@ -24,6 +24,7 @@ function openCardNouvelleTransaction() {
     nouvelleTransaction.classList.add("d-none")
     btnanullerTransaction.classList.remove("d-none")
 }
+
 function closeCardNouvelleTransaction() {
     cardTransaction.classList.add("d-none")
     nouvelleTransaction.classList.remove("d-none")
@@ -50,14 +51,26 @@ function switchLigthMode(ligthmode, darkmode) {
 }
 
 btntocard.addEventListener("click", function () {
-    card_operations.classList.add("d-flex")
+    card_operations.classList.add("row")
+    card_operations.classList.add("row-cols-auto")
     btntolist.classList.remove('d-none')
     btntocard.classList.add('d-none')
+    cards = document.getElementsByClassName('bg-opacity-75')
+    Array.from(cards).forEach(card => {
+        card.classList.add("w-45");
+        card.classList.remove("w-95");
+    });
 })
 btntolist.addEventListener("click", function () {
-    card_operations.classList.remove("d-flex")
+    card_operations.classList.remove("row")
+    card_operations.classList.remove("row-cols-auto")
     btntolist.classList.add('d-none')
     btntocard.classList.remove('d-none')
+    cards = document.getElementsByClassName('bg-opacity-75')
+    Array.from(cards).forEach(card => {
+        card.classList.add("w-95");
+        card.classList.remove("w-45");
+    });
 })
 
 nouvelleTransaction.addEventListener("click", function () {
@@ -83,6 +96,10 @@ darkmode.addEventListener("click", function () {
 })
 
 
+function viderChomps() {
+    document.getElementById('montant').value = ""
+    document.getElementById('discription').value = ""
+}
 
 function get_Montant() {
     return document.getElementById('montant').value;
@@ -98,26 +115,35 @@ function get_Type() {
 
 // verifier le champ de input Mantant
 function verifier_Montant() {
-    if (get_Montant() > 0)
+    if (get_Montant() > 0) {
+        document.getElementById('montant').classList.remove('bg-danger')
         return 1
-    return 0
+    }else {
+         document.getElementById('montant').classList.add('bg-danger')
+           return 0
+    }
 }
 // verifier le champ de input Discription
 
 function verifier_Discription() {
-    if (get_Discription().length > 0)
+    if (get_Discription().length > 0) {
+        document.getElementById('discription').classList.remove('bg-danger')
         return 1
-    return 0
+    }else {
+         document.getElementById('discription').classList.add('bg-danger')
+           return 0
+    }
 }
 
 //  cree un objet 
 function creer_objet(mantant, description, type) {
+    let date = new Date()
     let objet = {
         id: 1,
         mantant: mantant,
         description: description,
         type: type,
-        date: new Date()
+        date: " " + date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()
     }
     return objet
 }
@@ -143,6 +169,7 @@ function enregistrer_transaction(my_key) {
         let objet = creer_objet(get_Montant(), get_Discription(), get_Type())
         enregistrer_les_donnees(my_key, objet)
         update_montants(my_key)
+        viderChomps()
         closeCardNouvelleTransaction()
         // set_cards_in_html("Baztami", document.getElementById('cards'))
     }
@@ -207,11 +234,11 @@ let myarray = charger_les_donnees(my_key)
 for (let index = 0; index < myarray.length; index++) {
     let card = document.createElement('div');
     if (myarray[index].type == "Revenu") {
-        card.className = 'card text-white bg-success  m-2 bg-opacity-75';
-        card.innerHTML = ' <div class="row card-body   fw-bold ">   <div class="col"> ' + myarray[index].description + '</div> <div class="col">' + myarray[index].type + ' </div><div class="col "> ' + myarray[index].date + '</div><div class="col green-500"> +' + myarray[index].mantant + '£</div><div class="col-md-1"> <i id="' + myarray[index].id + '"  class="bi bi-pencil-square"></i></div><div class="col-md-1"> <i class="bi bi-trash3-fill"></i></div></div>'
+        card.className = 'card text-white  w-95 m-2  bg-success col   bg-opacity-75';
+        card.innerHTML = ' <div class="row   card-body   fw-bold ">   <div class="col"> +' + myarray[index].mantant + '</div>  <div class="col "> ' + myarray[index].date + '</div><div class="col green-500"> ' + myarray[index].description + '£</div><div class="col-md-1"> <i id="' + myarray[index].id + '"  class="bi bi-pencil-square"></i></div><div class="col-md-1"> <i class="bi bi-trash3-fill"></i></div></div>'
     } else {
-        card.className = 'card text-white bg-danger   m-2 bg-opacity-75';
-        card.innerHTML = ' <div class="row card-body   fw-bold ">   <div class="col"> ' + myarray[index].description + '</div> <div class="col">' + myarray[index].type + ' </div><div class="col "> ' + myarray[index].date + '</div><div class="col green-500"> -' + myarray[index].mantant + ' £</div><div class="col-md-1"> <i class="bi bi-pencil-square"></i></div><div class="col-md-1"> <i class="bi bi-trash3-fill"></i></div></div>'
+        card.className = 'card text-white  w-95 m-2 bg-danger col bg-opacity-75';
+        card.innerHTML = ' <div class="row  card-body   fw-bold ">   <div class="col"> -' + myarray[index].mantant + '</div>  <div class="col "> ' + myarray[index].date + '</div><div class="col green-500"> ' + myarray[index].description + ' £</div><div class="col-md-1"> <i class="bi bi-pencil-square"></i></div><div class="col-md-1"> <i class="bi bi-trash3-fill"></i></div></div>'
     }
     card_operations.appendChild(card)
 }

@@ -8,153 +8,147 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
+   
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body id="mybody" class="position-relative">
 
     <header>
         <nav class="navbar bg-body-tertiary ">
             <div class="container-fluid">
-                <i class="bi bi-wallet2 ">Baztami</i>
-                <div class="d-flex">
-                    <i class="bi bi-brightness-low-fill  "></i>
+                <img src="images/Sans titre.png" width="120" alt="logo">
+                <div class="d-flex justify-content-center">
+                    <img src="images/icons8-sun-star-100.png" width="30px" id="ligthmode" alt="ligth mode">
+                    <img src="images/icons8-ne-pas-déranger-2-100.png" class="d-none" id="darkmode" width="30px"
+                        alt="dark mode">
                 </div>
             </div>
         </nav>
     </header>
 
-    <main>
-        <section>
-            <div class="container-fluid  m-2 ">
-                <div class="row">
-                    <div class="col-md-5">
-                        <div class="card">
-                            <div class="card-header">
-                                Ajouter une Nouvelle Transaction
-                            </div>
-                            <div class="card-body">
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Montant" id="Montant"
-                                        aria-label="Montant">
-                                    <span class="input-group-text"> </span>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <select type="text" id="Type" class="form-control" placeholder="Montant"
-                                        aria-label="Type">
-                                        <option value="Revenu">Revenu (Entrée)</option>
-                                        <option value="Dépense">Dépense (Sortie)</option>
-                                    </select>
-                                    <span class="input-group-text"> </span>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <input type="text" id="Discription" class="form-control" placeholder="Ex:Salaire"
-                                        aria-label="Discription">
-                                    <span class="input-group-text"></span>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <input type="date" id="Date" class="form-control" placeholder="Date"
-                                        aria-label="Date">
 
-                                    <span class="input-group-text"></span>
-                                </div>
+    <main>
+        <div class="container">
+
+            <div class="container  m-2 ">
+                <div class="row  ">
+                    <div class="col">
+                        <div class="card  border-success">
+                            <div class="card-body  text-success">
+                                <h5 class="card-title  d-flex  justify-content-center" id="MontantActual">0</h5>
                             </div>
-                            <div class="card-footer text-muted d-flex justify-content-center">
-                                <button type="button" class="btn btn-outline-primary">Enregistrer la
-                                    transaction</button>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card border-warning ">
+
+                            <div class="card-body text-warning">
+                                <h5 class="card-title text-warning  d-flex  justify-content-center" id="MontantEntrer">0
+                                </h5>
                             </div>
+
                         </div>
                     </div>
 
 
-
-
-                    <div class="col-md-7">
-
-                        <div class="container  m-2 ">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="card  border-success">
-                                        <div class="card-body  text-success">
-                                            <h5 class="card-title  d-flex  justify-content-center">0</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="card border-warning ">
-
-                                        <div class="card-body text-warning">
-                                            <h5 class="card-title text-warning  d-flex  justify-content-center">0</h5>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-                                <div class="col">
-                                    <div class="card text-white border-danger">
-                                        <div class="card-body">
-                                            <h5 class="card-title text-danger  d-flex  justify-content-center">0</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Filtrer par type</span>
-                            <select type="text" class="form-control" id="Filtrer"   aria-label="Filtrer">
-                                <option value="Tous">Tous</option>
-                                <option value="Revenu">Revenu (Entrée)</option>
-                                <option value="Dépense">Dépense (Sortie)</option>
-                            </select>
-                            <span class="input-group-text">Trier par</span>
-                            <select type="text" id="Trier" class="form-control"  aria-label="Trier">
-                                <option value="date-desc">Date (Récente)</option>
-                                <option value="date-asc">Date (Ancienne)</option>
-                                <option value="amount-desc">Montant (Plus grand)</option>
-                                <option value="amount-asc">Montant (Plus petit)</option>
-                            </select>
-                        </div>
-
-
-
-                        <div class="container-fluid">
-
-                            <div class="card text-white bg-success m-2 bg-opacity-25 ">
-                                <div class="row card-body   fw-bold ">
-                                    <div class="col"> discription</div>
-                                    <div class="col">Revenu </div>
-                                    <div class="col "> 12-1-2121</div>
-                                    <div class="col green-500"> +2778</div>
-                                    <div class="col-md-1"> <i class="bi bi-pencil-square"></i></div>
-                                    <div class="col-md-1"> <i class="bi bi-trash3-fill"></i></div>
-
-                                </div>
-                            </div>
-
-                            <div class="card text-white bg-danger m-2 bg-opacity-25 ">
-                                <div class="row card-body fw-bold ">
-                                    <div class="col"> discription</div>
-                                    <div class="col">Revenu </div>
-                                    <div class="col"> 12-1-2121</div>
-                                    <div class="col"> -1234</div>
-                                    <div class="col-md-1"> <i class="bi bi-pencil-square"></i></div>
-                                    <div class="col-md-1"> <i class="bi bi-trash3-fill"></i></div>
-
-                                </div>
+                    <div class="col">
+                        <div class="card text-white border-danger">
+                            <div class="card-body">
+                                <h5 class="card-title text-danger  d-flex  justify-content-center" id="MontantSortie">0
+                                </h5>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-        </section>
+            <div class="container-fluid  m-2 ">
+                <div class="row d-flex justify-content-end ">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Filtrer par type</span>
+                        <select type="text" class="form-control" id="Filtrer" aria-label="Filtrer">
+                            <option value="Tous">Tous</option>
+                            <option value="Revenu">Revenu (Entrée)</option>
+                            <option value="Dépense">Dépense (Sortie)</option>
+                        </select>
+                        <span class="input-group-text">Trier par</span>
+                        <select type="text" id="Trier" class="form-control" aria-label="Trier">
+                            <option value="date-desc">Date (Récente)</option>
+                            <option value="date-asc">Date (Ancienne)</option>
+                            <option value="amount-desc">Montant (Plus grand)</option>
+                            <option value="amount-asc">Montant (Plus petit)</option>
+                        </select>
+                        <span class="input-group-text">
+                            ajouter une transaction</span>
+                        <button class=" btn bg-success  " id="nouvelleTransaction"> <img
+                                src="images/icons8-plus-100 (1).png" width="20" alt=""></button>
+                        <button class=" btn bg-danger d-none  " id="btnanullerTransaction"> <img
+                                src="images/icons8-effacer-64 (1).png" width="20" alt="ajouter"> </button>
+                        <span class="input-group-text">
+                            affichage</span>
+                        <button class=" btn bg-warning  " id="tocard"> <img src="images/icons8-windows-11-96.png"
+                                alt="to card" width="20"></button>
+                        <button class=" btn   bg-warning  d-none " id="tolist"> <img src="images/icons8-list-64.png"
+                                alt="to list" width="20"></button>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div id="cards" class="">
+            </div>
+        </div>
+
     </main>
 
+
+
+
+
+
+
+    <div class="container d-flex justify-content-center  position-sticky bottom-0 d-none" id="cardTransaction">
+
+        <div class="card w-75">
+            <div class="card-header d-flex justify-content-between"">
+           <p> Ajouter une Nouvelle Transaction</p>   <button type=" button" id="clescardTransaction"
+                class="btn-close btn-close-black" aria-label="Close"></button>
+
+            </div>
+            <div class="card-body">
+                <div class="input-group mb-3">
+                    <input type="number"  class="form-control" placeholder="Montant" id="montant" aria-label="Montant">
+                    <span class="input-group-text"> </span>
+                </div>
+                <div class="input-group mb-3">
+                    <select type="text" id="type" class="form-control" aria-label="type">
+                        <option value="Revenu">Revenu (Entrée)</option>
+                        <option value="Dépense">Dépense (Sortie)</option>
+                    </select>
+                    <span class="input-group-text"> </span>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="text" id="discription" class="form-control" placeholder="Ex:Salaire"
+                        aria-label="Discription">
+                    <span class="input-group-text"></span>
+                </div>
+
+            </div>
+            <div class="card-footer text-muted d-flex justify-content-center">
+                <button type="button" class="btn btn-outline-primary"
+                    onclick="enregistrer_transaction('Baztami')">Enregistrer la
+                    transaction</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
     <script src="js/script.js"></script>
+    <script src="js/card.js"></script>
 
 </body>
 
