@@ -1,9 +1,87 @@
 
-let card = document.createElement('div');
-card.className = 'card text-white bg-success m-2 bg-opacity-25';
-card.innerHTML = ' <div class="row card-body   fw-bold ">   <div class="col"> discription</div> <div class="col">Revenu </div><div class="col "> 12-1-2121</div><div class="col green-500"> +2778</div><div class="col-md-1"> <i class="bi bi-pencil-square"></i></div><div class="col-md-1"> <i class="bi bi-trash3-fill"></i></div></div>'
-let card_operations = document.getElementById('card_operations')
-// card_operations.appendChild(card)
+
+let cardTransaction = document.getElementById("cardTransaction")
+let clescardTransaction = document.getElementById("clescardTransaction")
+let nouvelleTransaction = document.getElementById("nouvelleTransaction")
+let btnanullerTransaction = document.getElementById("btnanullerTransaction")
+let ligthmode = document.getElementById("ligthmode")
+let darkmode = document.getElementById("darkmode")
+let mybody = document.getElementById("mybody")
+let btntocard=document.getElementById("tocard")
+let btntolist= document.getElementById("tolist")
+let card_operations = document.getElementById('cards')
+// dark mode
+///////////////////////////////////////////////
+if (localStorage.getItem("mode") == "darkmode")
+    switchDarkMode(ligthmode, darkmode);
+////////////////////////////////////////////////////
+
+console.log(localStorage.getItem("mode"))
+
+
+function openCardNouvelleTransaction() {
+    cardTransaction.classList.remove("d-none")
+    nouvelleTransaction.classList.add("d-none")
+    btnanullerTransaction.classList.remove("d-none")
+}
+function closeCardNouvelleTransaction() {
+    cardTransaction.classList.add("d-none")
+    nouvelleTransaction.classList.remove("d-none")
+    nouvelleTransaction.classList.remove("d-none")
+    btnanullerTransaction.classList.add("d-none")
+} function anullerTransaction() {
+    cardTransaction.classList.add("d-none")
+    nouvelleTransaction.classList.remove("d-none")
+    nouvelleTransaction.classList.remove("d-none")
+    btnanullerTransaction.classList.add("d-none")
+}
+
+function switchDarkMode(ligthmode, darkmode) {
+    ligthmode.classList.add("d-none")
+    darkmode.classList.remove("d-none")
+    localStorage.setItem("mode", 'darkmode')
+    mybody.classList.add("darkmode")
+}
+function switchLigthMode(ligthmode, darkmode) {
+    darkmode.classList.add("d-none")
+    ligthmode.classList.remove("d-none")
+    localStorage.setItem("mode", 'ligthmode')
+    mybody.classList.remove("darkmode")
+}
+
+btntocard.addEventListener("click", function () {
+    card_operations.classList.add("d-flex")
+    btntolist.classList.remove('d-none')
+    btntocard.classList.add('d-none')
+})
+btntolist.addEventListener("click", function () {
+    card_operations.classList.remove("d-flex")
+    btntolist.classList.add('d-none')
+    btntocard.classList.remove('d-none')
+})
+
+nouvelleTransaction.addEventListener("click", function () {
+    openCardNouvelleTransaction();
+})
+
+clescardTransaction.addEventListener("click", function () {
+    closeCardNouvelleTransaction();
+})
+
+btnanullerTransaction.addEventListener("click", function () {
+    anullerTransaction();
+
+})
+
+
+ligthmode.addEventListener("click", function () {
+    switchDarkMode(ligthmode, darkmode)
+})
+
+darkmode.addEventListener("click", function () {
+    switchLigthMode(ligthmode, darkmode)
+})
+
 
 
 function get_Montant() {
@@ -64,7 +142,9 @@ function enregistrer_transaction(my_key) {
     if (verifier_Montant() && verifier_Discription()) {
         let objet = creer_objet(get_Montant(), get_Discription(), get_Type())
         enregistrer_les_donnees(my_key, objet)
-        update(my_key)
+        update_montants(my_key)
+        closeCardNouvelleTransaction()
+        // set_cards_in_html("Baztami", document.getElementById('cards'))
     }
 }
 
@@ -89,6 +169,9 @@ function calculer_montant_Actual(my_key) {
     return calculer_montant_Revenu(my_key) - calculer_montant_Dépense(my_key)
 }
 
+
+
+
 function set_MontantActual(my_key) {
     document.getElementById('MontantActual').textContent = calculer_montant_Actual(my_key)
 }
@@ -101,12 +184,47 @@ function set_MontantDépense(my_key) {
     document.getElementById('MontantSortie').textContent = calculer_montant_Dépense(my_key)
 }
 
+let my_key = "Baztami"
+// function update_montants(my_key) {
+set_MontantActual(my_key)
+set_MontantRevenu(my_key)
+set_MontantDépense(my_key)
+// }
 
-function update(my_key) {
+function update_montants(my_key) {
     set_MontantActual(my_key)
     set_MontantRevenu(my_key)
     set_MontantDépense(my_key)
+}
 
+
+
+
+
+// function set_cards_in_html(my_key, card_operations) {
+card_operations = document.getElementById('cards')
+let myarray = charger_les_donnees(my_key)
+for (let index = 0; index < myarray.length; index++) {
+    let card = document.createElement('div');
+    if (myarray[index].type == "Revenu") {
+        card.className = 'card text-white bg-success  m-2 bg-opacity-75';
+        card.innerHTML = ' <div class="row card-body   fw-bold ">   <div class="col"> ' + myarray[index].description + '</div> <div class="col">' + myarray[index].type + ' </div><div class="col "> ' + myarray[index].date + '</div><div class="col green-500"> +' + myarray[index].mantant + '£</div><div class="col-md-1"> <i id="' + myarray[index].id + '"  class="bi bi-pencil-square"></i></div><div class="col-md-1"> <i class="bi bi-trash3-fill"></i></div></div>'
+    } else {
+        card.className = 'card text-white bg-danger   m-2 bg-opacity-75';
+        card.innerHTML = ' <div class="row card-body   fw-bold ">   <div class="col"> ' + myarray[index].description + '</div> <div class="col">' + myarray[index].type + ' </div><div class="col "> ' + myarray[index].date + '</div><div class="col green-500"> -' + myarray[index].mantant + ' £</div><div class="col-md-1"> <i class="bi bi-pencil-square"></i></div><div class="col-md-1"> <i class="bi bi-trash3-fill"></i></div></div>'
+    }
+    card_operations.appendChild(card)
+}
+// }
+
+function modifier_card(my_key, id, type, montant, description) {
+    let myarray = charger_les_donnees(my_key)
+    for (let index = 0; index < myarray.length; index++)
+        if (myarray[index].id == id) {
+            myarray[index].type = type
+            myarray[index].description = description
+            myarray[index].montant = montant
+        }
 }
 
 
@@ -125,6 +243,4 @@ function update(my_key) {
 
 
 
-
-
-
+// localStorage.clear()
