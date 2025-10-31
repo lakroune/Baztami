@@ -281,12 +281,15 @@ function methodefultter(type_fultter) {
 }
 
 
+
+
 function fultter() {
     type_fultter = document.getElementById("type_fultter").value
     localStorage.setItem("filtrer", type_fultter)
     methodefultter(type_fultter)
 }
-set_cards_in_html(my_key);
+
+
 
 
 function button_supprimer(id) {
@@ -356,4 +359,15 @@ function sauvgarder_modification(my_key) {
         localStorage.removeItem('id_modifier')
         vider_champs()
     }
+}
+
+
+
+
+// ::::::::::::::::::::::::::::::::::::::::: 
+if (!localStorage.getItem("filtrer"))
+    set_cards_in_html(my_key)
+else {
+    methodefultter(localStorage.getItem("filtrer"))
+    document.getElementById('type_fultter').value = localStorage.getItem("filtrer")
 }
