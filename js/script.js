@@ -25,7 +25,6 @@ if (localStorage.getItem("mode") == "darkmode")
 
 console.log(localStorage.getItem("mode"))
 
-
 function openCardNouvelleTransaction() {
     btnsave.classList.add("d-none")
     btnajout.classList.remove('d-none')
@@ -65,29 +64,6 @@ function switchLigthMode(ligthmode, darkmode) {
 
 }
 
-
-// btntocard.addEventListener("click", function () {
-//     card_operations.classList.add("row")
-//     card_operations.classList.add("row-cols-auto")
-//     btntolist.classList.remove('d-none')
-//     btntocard.classList.add('d-none')
-//     cards = document.getElementsByClassName('bg-opacity-75')
-//     Array.from(cards).forEach(card => {
-//         card.classList.add("w-22");
-//         card.classList.remove("w-95");
-//     });
-// })
-// btntolist.addEventListener("click", function () {
-//     card_operations.classList.remove("row")
-//     card_operations.classList.remove("row-cols-auto")
-//     btntolist.classList.add('d-none')
-//     btntocard.classList.remove('d-none')
-//     cards = document.getElementsByClassName('bg-opacity-75')
-//     Array.from(cards).forEach(card => {
-//         card.classList.add("w-95");
-//         card.classList.remove("w-22");
-//     });
-// })
 
 closevalidation.addEventListener("click", function () {
     validation_supprission.classList.add('d-none')
@@ -208,8 +184,9 @@ function enregistrer_transaction(my_key) {
         update_montants(my_key)
         vider_champs()
         closeCardNouvelleTransaction()
-        set_cards_in_html(my_key);
+        methodefultter(localStorage.getItem("filtrer"))
     }
+
 }
 
 function calculer_montant_Dépense(my_key) {
@@ -255,7 +232,7 @@ function update_montants(my_key) {
     set_MontantDépense(my_key)
 }
 
- 
+
 
 function set_cards_in_html(my_key) {
     card_operations = document.getElementById('cards')
@@ -277,9 +254,10 @@ function set_cards_in_html(my_key) {
     }
     update_montants(my_key)
 }
-function fultter() {
+
+
+function methodefultter(type_fultter) {
     card_operations = document.getElementById('cards')
-    type_fultter = document.getElementById("type_fultter").value
     document.getElementById('cards').innerHTML = ""
     let myarray = charger_les_donnees(my_key)
     for (let index = 0; index < myarray.length; index++) {
@@ -302,6 +280,12 @@ function fultter() {
     update_montants(my_key)
 }
 
+
+function fultter() {
+    type_fultter = document.getElementById("type_fultter").value
+    localStorage.setItem("filtrer", type_fultter)
+    methodefultter(type_fultter)
+}
 set_cards_in_html(my_key);
 
 
@@ -368,26 +352,8 @@ function sauvgarder_modification(my_key) {
         cardTransaction.classList.add("d-none")
         btnsave.classList.add("d-none")
         btnajout.classList.remove('d-none')
-        set_cards_in_html(my_key);
+        methodefultter(localStorage.getItem("filtrer"))
         localStorage.removeItem('id_modifier')
         vider_champs()
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// localStorage.clear()
