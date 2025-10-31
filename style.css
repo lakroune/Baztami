@@ -3,13 +3,32 @@
 body {
   font-family: 'Inter', sans-serif;
 }
- .darkmode{
-  background-color: black;
- }
 
- .w-45 {
-  width: 45%;
- }
- .w-95 {
+.darkmode {
+  background-color: rgb(83, 77, 77);
+}
+.darkmode {
+  background-color: rgb(83, 77, 77);
+}
+
+.w-22 {
+  width: 30%;
+}
+
+.w-95 {
   width: 95%;
- }
+}
+
+.bottom-25 {
+  bottom: 25%;
+}
+
+.bottom-15 {
+  bottom: 15%;
+}
+ul {
+  background-color: transparent;
+}
+.gap-25{
+  gap: 25px;
+}

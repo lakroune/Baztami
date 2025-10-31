@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-   
+
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -19,9 +19,8 @@
             <div class="container-fluid">
                 <img src="images/Sans titre.png" width="120" alt="logo">
                 <div class="d-flex justify-content-center">
-                    <img src="images/icons8-sun-star-100.png" width="30px" id="ligthmode" alt="ligth mode">
-                    <img src="images/icons8-ne-pas-déranger-2-100.png" class="d-none" id="darkmode" width="30px"
-                        alt="dark mode">
+                    <img src="images/icons8-ne-pas-déranger-2-100.png" width="30px" id="ligthmode" alt="ligth mode">
+                    <img src="images/icons8-sun-star-100.png" class="d-none" id="darkmode" width="30px" alt="dark mode">
                 </div>
             </div>
         </nav>
@@ -36,14 +35,15 @@
                     <div class="col">
                         <div class="card  border-success">
                             <div class="card-body  text-success">
+                               <h5 class="d-flex justify-content-center">Solde net</h5>
                                 <h5 class="card-title  d-flex  justify-content-center" id="MontantActual">0</h5>
                             </div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="card border-warning ">
-
-                            <div class="card-body text-warning">
+                            <div class="card-body  text-warning">
+                               <h5 class="d-flex justify-content-center">revenus</h5>
                                 <h5 class="card-title text-warning  d-flex  justify-content-center" id="MontantEntrer">0
                                 </h5>
                             </div>
@@ -54,7 +54,8 @@
 
                     <div class="col">
                         <div class="card text-white border-danger">
-                            <div class="card-body">
+                            <div class="card-body text-danger ">
+                               <h5 class="d-flex justify-content-center">dépenses</h5>
                                 <h5 class="card-title text-danger  d-flex  justify-content-center" id="MontantSortie">0
                                 </h5>
                             </div>
@@ -66,13 +67,17 @@
             <div class="container-fluid  m-2 ">
                 <div class="row d-flex justify-content-end ">
                     <div class="input-group mb-3">
-                        <span class="input-group-text">Filtrer par type</span>
-                        <select type="text" class="form-control" id="Filtrer" aria-label="Filtrer">
+                        <span class="input-group-text"></span>
+                        <button class=" btn bg-danger  " onclick="fultter()"  id=""> <img src="images/icons8-59-68 (1).png"
+                                width="20"  alt=""></button>
+                        <select type="text" class="form-control" id="type_fultter" aria-label="Filtrer">
                             <option value="Tous">Tous</option>
                             <option value="Revenu">Revenu (Entrée)</option>
                             <option value="Dépense">Dépense (Sortie)</option>
                         </select>
-                        <span class="input-group-text">Trier par</span>
+                        <span class="input-group-text "> </span>
+                        <button class=" btn bg-danger  " id=""> <img src="images/icons8-trier-le-montant-96.png"
+                                width="20" alt=""></button>
                         <select type="text" id="Trier" class="form-control" aria-label="Trier">
                             <option value="date-desc">Date (Récente)</option>
                             <option value="date-asc">Date (Ancienne)</option>
@@ -80,24 +85,25 @@
                             <option value="amount-asc">Montant (Plus petit)</option>
                         </select>
                         <span class="input-group-text">
-                            ajouter une transaction</span>
+                        </span>
                         <button class=" btn bg-success  " id="nouvelleTransaction"> <img
                                 src="images/icons8-plus-100 (1).png" width="20" alt=""></button>
                         <button class=" btn bg-danger d-none  " id="btnanullerTransaction"> <img
                                 src="images/icons8-effacer-64 (1).png" width="20" alt="ajouter"> </button>
-                        <span class="input-group-text">
-                            affichage</span>
+                        <!-- <span class="input-group-text">
+                        </span>
                         <button class=" btn bg-warning  " id="tocard"> <img src="images/icons8-windows-11-96.png"
                                 alt="to card" width="20"></button>
                         <button class=" btn   bg-warning  d-none " id="tolist"> <img src="images/icons8-list-64.png"
-                                alt="to list" width="20"></button>
+                                alt="to list" width="20"></button> -->
 
                     </div>
 
 
                 </div>
             </div>
-            <div id="cards" class="">
+            <div id="cards" class="row row-cols-auto gap-25">
+                
             </div>
         </div>
 
@@ -109,9 +115,8 @@
 
 
 
-    <div class="container d-flex justify-content-center  position-sticky bottom-0 d-none" id="cardTransaction">
-
-        <div class="card w-75">
+    <div class="container d-flex justify-content-center  position-sticky bottom-15 d-none" id="cardTransaction">
+        <div class=" card">
             <div class="card-header d-flex justify-content-between"">
            <p> Ajouter une Nouvelle Transaction</p>   <button type=" button" id="clescardTransaction"
                 class="btn-close btn-close-black" aria-label="Close"></button>
@@ -119,7 +124,7 @@
             </div>
             <div class="card-body">
                 <div class="input-group mb-3">
-                    <input type="number"  class="form-control" placeholder="Montant" id="montant" aria-label="Montant">
+                    <input type="number" class="form-control" placeholder="Montant" id="montant" aria-label="Montant">
                     <span class="input-group-text"> </span>
                 </div>
                 <div class="input-group mb-3">
@@ -137,12 +142,29 @@
 
             </div>
             <div class="card-footer text-muted d-flex justify-content-center">
-                <button type="button" class="btn btn-outline-primary"
+                <button id="btnajout" type="button" class="btn btn-outline-primary"
                     onclick="enregistrer_transaction('Baztami')">Enregistrer la
+                    transaction</button>
+                <button id="btnsave" type="button" class="btn btn-outline-primary d-none"
+                    onclick="sauvgarder_modification('Baztami')">sauvgarder la
                     transaction</button>
             </div>
         </div>
     </div>
+
+
+    <div class="container d-flex justify-content-center  position-sticky bottom-25  d-none" id="validation_supprission">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between"">
+           <p> Voulez-vous vraiment supprimer ? </p>    
+            </div>
+            <div class=" d-flex justify-content-around p-4">
+                <button id="closevalidation" type="button" class="btn btn-outline-warning" onclick="">non</button>
+                <button id="" type="button" class="btn btn-outline-danger " onclick="supprimer()">oui</button>
+            </div>
+        </div>
+    </div>
+
 
 
 

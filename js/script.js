@@ -30,6 +30,7 @@ function openCardNouvelleTransaction() {
     cardTransaction.classList.remove("d-none")
     nouvelleTransaction.classList.add("d-none")
     btnanullerTransaction.classList.remove("d-none")
+    vider_champs()
 }
 
 function closeCardNouvelleTransaction() {
@@ -43,6 +44,7 @@ function closeCardNouvelleTransaction() {
     nouvelleTransaction.classList.remove("d-none")
     nouvelleTransaction.classList.remove("d-none")
     btnanullerTransaction.classList.add("d-none")
+
 }
 
 function switchDarkMode(ligthmode, darkmode) {
@@ -59,28 +61,28 @@ function switchLigthMode(ligthmode, darkmode) {
 }
 
 
-btntocard.addEventListener("click", function () {
-    card_operations.classList.add("row")
-    card_operations.classList.add("row-cols-auto")
-    btntolist.classList.remove('d-none')
-    btntocard.classList.add('d-none')
-    cards = document.getElementsByClassName('bg-opacity-75')
-    Array.from(cards).forEach(card => {
-        card.classList.add("w-45");
-        card.classList.remove("w-95");
-    });
-})
-btntolist.addEventListener("click", function () {
-    card_operations.classList.remove("row")
-    card_operations.classList.remove("row-cols-auto")
-    btntolist.classList.add('d-none')
-    btntocard.classList.remove('d-none')
-    cards = document.getElementsByClassName('bg-opacity-75')
-    Array.from(cards).forEach(card => {
-        card.classList.add("w-95");
-        card.classList.remove("w-45");
-    });
-})
+// btntocard.addEventListener("click", function () {
+//     card_operations.classList.add("row")
+//     card_operations.classList.add("row-cols-auto")
+//     btntolist.classList.remove('d-none')
+//     btntocard.classList.add('d-none')
+//     cards = document.getElementsByClassName('bg-opacity-75')
+//     Array.from(cards).forEach(card => {
+//         card.classList.add("w-22");
+//         card.classList.remove("w-95");
+//     });
+// })
+// btntolist.addEventListener("click", function () {
+//     card_operations.classList.remove("row")
+//     card_operations.classList.remove("row-cols-auto")
+//     btntolist.classList.add('d-none')
+//     btntocard.classList.remove('d-none')
+//     cards = document.getElementsByClassName('bg-opacity-75')
+//     Array.from(cards).forEach(card => {
+//         card.classList.add("w-95");
+//         card.classList.remove("w-22");
+//     });
+// })
 
 closevalidation.addEventListener("click", function () {
     validation_supprission.classList.add('d-none')
@@ -95,6 +97,7 @@ clescardTransaction.addEventListener("click", function () {
 
 btnanullerTransaction.addEventListener("click", function () {
     anullerTransaction();
+    vider_champs
 
 })
 
@@ -198,9 +201,9 @@ function enregistrer_transaction(my_key) {
         let objet = creer_objet(get_Montant(), get_Discription(), get_Type())
         enregistrer_les_donnees(my_key, objet)
         update_montants(my_key)
-        viderChomps()
+        vider_champs()
         closeCardNouvelleTransaction()
-        // set_cards_in_html("Baztami", document.getElementById('cards'))
+        set_cards_in_html(my_key);
     }
 }
 
@@ -249,6 +252,23 @@ function update_montants(my_key) {
 
 
 
+// function set_cards_in_html(my_key) {
+//     card_operations = document.getElementById('cards')
+//     document.getElementById('cards').innerHTML = ""
+//     let myarray = charger_les_donnees(my_key)
+//     for (let index = 0; index < myarray.length; index++) {
+//         let card = document.createElement('div');
+//         if (myarray[index].type == "Revenu") {
+//             card.className = 'card text-white  w-95 m-2  bg-success col   bg-opacity-75';
+//             card.innerHTML = ' <div class="row   card-body   fw-bold ">   <div class="col"> +' + myarray[index].montant + 'MAD</div>  <div class="col "> ' + myarray[index].date + '</div><div class="col green-500"> ' + myarray[index].description + '</div><div class="col-md-1"> <i   role="button"  onclick="button_modifier(' + myarray[index].id + ')" class="bi bi-pencil-square"></i></div><div class="col-md-1"> <i class="bi bi-trash3-fill" role="button"  onclick="button_supprimer(' + myarray[index].id + ')"  ></i></div></div>'
+//         } else {
+//             card.className = 'card text-white  w-95 m-2 bg-danger col bg-opacity-75';
+//             card.innerHTML = ' <div class="row   card-body   fw-bold ">   <div class="col"> -' + myarray[index].montant + 'MAD</div>  <div class="col "> ' + myarray[index].date + '</div><div class="col green-500"> ' + myarray[index].description + '</div><div class="col-md-1"> <i   role="button"  onclick="button_modifier(' + myarray[index].id + ')" class="bi bi-pencil-square"></i></div><div class="col-md-1"> <i class="bi bi-trash3-fill" role="button"  onclick="button_supprimer(' + myarray[index].id + ')"  ></i></div></div>'
+//         }
+//         card_operations.appendChild(card)
+//     }
+// }
+
 function set_cards_in_html(my_key) {
     card_operations = document.getElementById('cards')
     document.getElementById('cards').innerHTML = ""
@@ -256,16 +276,44 @@ function set_cards_in_html(my_key) {
     for (let index = 0; index < myarray.length; index++) {
         let card = document.createElement('div');
         if (myarray[index].type == "Revenu") {
-            card.className = 'card text-white  w-95 m-2  bg-success col   bg-opacity-75';
-            card.innerHTML = ' <div class="row   card-body   fw-bold ">   <div class="col"> +' + myarray[index].montant + 'MAD</div>  <div class="col "> ' + myarray[index].date + '</div><div class="col green-500"> ' + myarray[index].description + '</div><div class="col-md-1"> <i   role="button"  onclick="button_modifier(' + myarray[index].id + ')" class="bi bi-pencil-square"></i></div><div class="col-md-1"> <i class="bi bi-trash3-fill" role="button"  onclick="button_supprimer(' + myarray[index].id + ')"  ></i></div></div>'
+            card.className = ' card bg-success text-white m-2   bg-opacity-75';
+            card.innerHTML = ' <div class="card-header d-flex  justify-content-around"> <i   role="button"  onclick="button_modifier(' + myarray[index].id + ')" class="bi bi-pencil-square"></i> <i class="bi bi-trash3-fill" role="button"  onclick="button_supprimer(' + myarray[index].id + ')"  > ' + `</i> </div><div class=" "><ul class="list-group  "><li class="bg- list-group-item text-white  bg-success border-success"><strong>+</strong> <span class="   fw-bold">  ${myarray[index].montant}</span><strong> MAD</strong></li><li class="list-group-item text-white  bg-success border-success"><strong>Type :</strong> <span class="">${myarray[index].type}</span></li><li class="list-group-item  text-white  bg-success border-success"><strong>Date :</strong> <span>${myarray[index].date}</span></li></ul><div class="card-text mt-3"><strong>Description :</strong><p class="small ">${myarray[index].description} .</p></div></div>`
+
         } else {
-            card.className = 'card text-white  w-95 m-2 bg-danger col bg-opacity-75';
-            card.innerHTML = ' <div class="row   card-body   fw-bold ">   <div class="col"> -' + myarray[index].montant + 'MAD</div>  <div class="col "> ' + myarray[index].date + '</div><div class="col green-500"> ' + myarray[index].description + '</div><div class="col-md-1"> <i   role="button"  onclick="button_modifier(' + myarray[index].id + ')" class="bi bi-pencil-square"></i></div><div class="col-md-1"> <i class="bi bi-trash3-fill" role="button"  onclick="button_supprimer(' + myarray[index].id + ')"  ></i></div></div>'
+
+            card.className = ' card bg-danger  text-white m-2   bg-opacity-75';
+            card.innerHTML = ' <div class="card-header d-flex  justify-content-around"> <i   role="button"  onclick="button_modifier(' + myarray[index].id + ')" class="bi bi-pencil-square"></i> <i class="bi bi-trash3-fill" role="button"  onclick="button_supprimer(' + myarray[index].id + ')"  > ' + `</i> </div><div class=""><ul class="list-group bg-danger "><li class="list-group-item text-white  bg-danger border-danger"><strong>-</strong> <span class="   fw-bold"> ${myarray[index].montant}</span> <strong> MAD</strong></li><li class="list-group-item text-white  bg-danger border-danger"><strong>Type :</strong> <span class="">${myarray[index].type}</span></li><li class="list-group-item  text-white  bg-danger border-danger"><strong>Date :</strong> <span>${myarray[index].date}</span></li></ul><div class="card-text mt-3"><strong>Description :</strong><p class="small ">${myarray[index].description} .</p></div></div>`
+
         }
         card_operations.appendChild(card)
     }
     update_montants(my_key)
 }
+function fultter() {
+    card_operations = document.getElementById('cards')
+    type_fultter=document.getElementById("type_fultter").value
+    document.getElementById('cards').innerHTML = ""
+    let myarray = charger_les_donnees(my_key)
+    for (let index = 0; index < myarray.length; index++) {
+        let card = document.createElement('div');
+        if (myarray[index].type == type_fultter && type_fultter == "Revenu") {
+            card.className = ' card bg-success text-white     bg-opacity-75';
+            card.innerHTML = ' <div class="card-header d-flex  justify-content-around"> <i   role="button"  onclick="button_modifier(' + myarray[index].id + ')" class="bi bi-pencil-square"></i> <i class="bi bi-trash3-fill" role="button"  onclick="button_supprimer(' + myarray[index].id + ')"  > ' + `</i> </div><div class="  bg-opacity-75 "><ul class="list-group  "><li class="bg- list-group-item text-white  bg-success border-success"><strong>+</strong> <span class="   fw-bold">  ${myarray[index].montant}</span><strong> MAD</strong></li><li class="list-group-item text-white  bg-success border-success"><strong>Type :</strong> <span class="">${myarray[index].type}</span></li><li class="list-group-item  text-white  bg-success border-success"><strong>Date :</strong> <span>${myarray[index].date}</span></li></ul><div class="card-text mt-3"><strong>Description :</strong><p class="small ">${myarray[index].description} .</p></div></div>`
+
+        } else if(myarray[index].type == type_fultter && type_fultter == "Dépense" ) {
+
+            card.className = ' card bg-danger  text-white    bg-opacity-75';
+            card.innerHTML = ' <div class="card-header d-flex  justify-content-around"> <i   role="button"  onclick="button_modifier(' + myarray[index].id + ')" class="bi bi-pencil-square"></i> <i class="bi bi-trash3-fill" role="button"  onclick="button_supprimer(' + myarray[index].id + ')"  > ' + `</i> </div><div class=""><ul class="list-group bg-danger "><li class="list-group-item text-white  bg-danger border-danger"><strong>-</strong> <span class="   fw-bold"> ${myarray[index].montant}</span> <strong> MAD</strong></li><li class="list-group-item text-white  bg-danger border-danger"><strong>Type :</strong> <span class="">${myarray[index].type}</span></li><li class="list-group-item  text-white  bg-danger border-danger"><strong>Date :</strong> <span>${myarray[index].date}</span></li></ul><div class="card-text mt-3"><strong>Description :</strong><p class="small ">${myarray[index].description} .</p></div></div>`
+
+        }
+        card_operations.appendChild(card)
+    }
+    if(type_fultter=="Tous")set_cards_in_html(my_key)
+
+    console.log("kjdhsl")
+    update_montants(my_key)
+}
+
 set_cards_in_html(my_key);
 
 
@@ -276,32 +324,27 @@ function button_supprimer(id) {
 }
 
 
-function supprimer(id) {
-    let id = localStorage.getItem('id_supprimer')
 
-
-
-    let myarray = charger_les_donnees(my_key)
-    let id = localStorage.getItem("id_modifier")
-    let verifierdiscription = verifier_Discription()
-    if (verifier_Montant() && verifierdiscription) {
-        for (let index = 0; index < myarray.length; index++)
-            if (myarray[index].id == id) {
-                myarray[index].description = get_Discription()
-                myarray[index].type = get_Type()
-                myarray[index].montant = get_Montant()
-                console.log(myarray[index])
-            }
-
-        let array_to_string = JSON.stringify(myarray)
-        localStorage.setItem(my_key, array_to_string)
-        cardTransaction.classList.add("d-none")
-        btnsave.classList.add("d-none")
-        btnajout.classList.remove('d-none')
-        set_cards_in_html(my_key);
-    }
-
+function vider_champs() {
+    document.getElementById('montant').value = 0
+    document.getElementById('discription').value = ''
 }
+
+
+function supprimer() {
+    let id = localStorage.getItem('id_supprimer')
+    let myarray = charger_les_donnees(my_key)
+    let newarray = []
+    for (let index = 0; index < myarray.length; index++)
+        if (myarray[index].id != id)
+            newarray.push(myarray[index])
+    let array_to_string = JSON.stringify(newarray)
+    localStorage.setItem(my_key, array_to_string)
+    validation_supprission.classList.add("d-none")
+    set_cards_in_html(my_key);
+    localStorage.removeItem('id_supprimer')
+}
+
 
 
 function button_modifier(id) {
@@ -338,11 +381,13 @@ function sauvgarder_modification(my_key) {
         btnsave.classList.add("d-none")
         btnajout.classList.remove('d-none')
         set_cards_in_html(my_key);
+        localStorage.removeItem('id_modifier')
+        vider_champs()
     }
 }
 
 
-// localStorage.clear()
+
 
 
 
